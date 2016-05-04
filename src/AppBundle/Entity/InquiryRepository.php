@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * InquiryRepository
@@ -12,4 +13,33 @@ use Doctrine\ORM\EntityRepository;
  */
 class InquiryRepository extends EntityRepository
 {
+    public function findAllByKeyword($keyword)
+    {
+        //名前か電話番号かemailで検索
+        $query = $this->createQueryBuilder('i')
+            ->where('i.name LIKE :keyword')
+            ->orwhere('i.tel LIKE :keyword')
+            ->orwhere('i.email LIKE :keyword')
+            ->orderBy('i.id', 'DESC')
+            ->setParameters([
+                ':keyword' => '%'.$keyword.'%'
+            ])
+            ->getQuery();
+
+        return new ArrayCollection($query->getResult());
+    }
+    
+    public function findUnprocessed()
+    {
+        $query = $this->createQueryBuilder('i')
+            ->where('i.processStatus = :processStatus')
+            ->orwhere('i.processStatus is null')
+            ->orderBy('i.id', 'ASC')
+            ->setParameters([
+                ':processStatus' => '0'
+            ])
+            ->getQuery();
+        
+        return $query->execute();
+    }
 }

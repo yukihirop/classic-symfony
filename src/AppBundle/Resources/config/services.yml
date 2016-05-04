@@ -1,0 +1,23 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+    csv_encoding: Shift_JIS #文字エンコーディングの指定に使うパラメータ
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+#    app.inquiry_csv_builder: #サービスのID
+#        #サービス化するクラス
+#        class:    AppBundle\Service\Csv\InquiryCsvBuilder
+#        #コンストラクタ引数
+#        arguments:    [%csv_encoding%, @app.inquiry_repository]
+
+
+    app.inquiry_repository:
+        class:    AppBundle\Entity\InquiryRepository
+        #別のサービス経由でインスタンス化する指定
+        factory:    [@doctrine.orm.entity_manager, getRepository]
+        arguments:
+            - AppBundle\Entity\Inquiry

@@ -1,0 +1,5 @@
+AppBundle\Entity\BlogArticle:
+    blog{1..20}: #エンティティ式別名の行で繰り返し機能を利用
+        title: <lastName()> <firstName()>の記事 #姓/名ダミー機能を利用
+        targetDate: <dateTime()> #日付のダミー機能
+        content:  今日は<numberBetween(1, 100)>人の来場者がありました。...

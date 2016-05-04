@@ -35,3 +35,8 @@ assetic:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+
+hautelook_alice:
+    locale: ja_JP
+    seed: 1
